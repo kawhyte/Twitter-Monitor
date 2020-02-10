@@ -47,9 +47,7 @@ let twitterHandles = [
 
 //ADD TWEETS
 twitterHandles.forEach((twitterHandle, i) => {
-  // console.log("twitterHandle ",twitterHandle)
   tweets[twitterHandle.url] = [];
-  // currentTweets[twitterHandle.url] = [];
   apiurls.push(twitterHandle.url);
 });
 
@@ -66,109 +64,39 @@ setInterval(() => {
         try {
           const $ = cheerio.load(body);
           let turl = "https://twitter.com" + response.req.path;
-          // console.log("cheerio", $("div.js-tweet-text-container p")
-          // .eq(0)
-          // .text());
-          // console.log($( "cheerio lengtwitterHandle", "div.js-tweet-text-container p").lengtwitterHandle)
 
           let lastTweet = $("div.js-tweet-text-container p")
             .eq(0)
             .text()
             .toLowerCase();
-          // console.log("lastTweet", lastTweet);
-          // console.log("tweets[turl]", tweets[turl]);
-
-          // console.log(
-          //   "before tweets[turl]",
-          //   tweets[turl].indexOf(lastTweet) === -1
-          // );
+    
           console.log('Checking if items  should be added to tweets[turl] array ')
           if (tweets[turl].indexOf(lastTweet) === -1) {
-            // lastTweet.split(",")
 
             tweets[turl].push(lastTweet);
             console.log("Added");
           }
-          // console.log("after tweets[turl] ",tweets[turl])
-          // console.log("currentTweets[turl]", tweets[turl]);
-
-          // console.log("stop");
-
-          //if (!tweets[turl].lengtwitterHandle) {
-          // console.log(" First Load");
-          //FIRST LOAD
-          //for (
-          //   let i = 0;
-          // i < $("div.js-tweet-text-container p").lengtwitterHandle;
-          //   i <= 1;
-          //   i++
-          // ) {
-          // tweets[turl].push(
-          //   $("div.js-tweet-text-container p")
-          //     .eq(0)
-          //     .text()
-          //     .toLowerCase()
-          // );
-          //  console.log(tweets[turl]);
-          //}
-          //} else {
-          //EVERY OtwitterHandleER TIME
+  
           for (
             let i = 0;
             // i < $("div.js-tweet-text-container p").lengtwitterHandle;
             i < 1;
             i++
           ) {
-            //tweets[turl]
+          
             const s_tweet = $("div.js-tweet-text-container p")
               .eq(0)
               .text()
               .toLowerCase();
 
-            // console.log("s_tweet array", tweets[turl]);
-            // console.log("s_tweet", s_tweet);
-
-            // console.log("s_tweet index of", tweets[turl].indexOf(s_tweet));
-            // console.log("tweets[turl] before  -1");
-            //CHECK IF TWEET IS NEWS
-            //if (tweets[turl].indexOf(s_tweet) === -1) {
-            //tweets[turl].push(s_tweet);
-
-            // let twitterHandle_kw = twitterHandles.filter(
-            //   (d, i) => d.url === turl
-            // )[0].keywords.split(",");
-
-            // console.log("tweets[turl] after  -1", tweets[turl]);
-
-            // let twitterHandle_name = twitterHandles.filter((d, i) => d.url === turl)[0]
+       
             //   .name;
             let twitterHandle_name = "Kenny";
             // twitterHandle_kw.forEach((kw, j) => {
             keyword.forEach((kw, j) => {
-              // if (kw === "*") {
-              //   // console.log(" kw===* ",kw)
-              //   N.push({
-              //     tweet: s_tweet,
-              //     name: twitterHandle_name
-              //   });
-              // } else {
-              // console.log("tweets[turl]", tweets[turl]);
-              // console.log("(kw)", kw);
-
-              // let IstwitterHandleistrue = wordInString(tweets[turl], kw);
-
-              // console.log("IstwitterHandleistrue ", IstwitterHandleistrue);
-              // console.log("tweets[turl]", tweets[turl])
-              // console.log("tweets[turl].indexOf(kw) === 1", tweets[turl].indexOf(kw))
-
-              // console.log("for each", wordInString(tweets[turl], kw));
-              // console.log("email sent", tweets[turl].emailSent);
+      
 
               if (wordInString(tweets[turl], kw)) {
-                // if (kw.indexOf(tweets[turl]) === 1) {
-                //tweets[turl].processed = true
-
-                // console.log("tempArray", tempArray);
 
                 console.log('Checking if items  should be added to temp and N array ')
 
@@ -184,12 +112,11 @@ setInterval(() => {
                 }
                 
               }
-              //}
+          
             });
-            // console.log("outside for N array ", N);
-            //}
+  
           }
-          //}
+          
         } catch (e) {
           console.log("Error =>" + e);
         }
@@ -201,9 +128,7 @@ setInterval(() => {
   );
 }, 5 * 1000); //RUNS EVERY 5 SECONDS
 
-function wordInString(s, word) {
-  return new RegExp("\\b" + word + "\\b", "i").test(s);
-}
+
 
 setInterval(() => {
   console.log('Checking if email shoukd be sent ')
@@ -250,12 +175,6 @@ function SendEmail(tweet, name) {
   });
 }
 
-// SendEmail(
-//   `#StrangetwitterHandleingsCoworkersSay
-// *works in accounting*
-
-// Me: “Hey! Do you know which GL twitterHandleis money belongs in?”
-
-// twitterHandleem: “What’s a GL?”`,
-//   "@dontcallmenatok"
-// );
+function wordInString(s, word) {
+  return new RegExp("\\b" + word + "\\b", "i").test(s);
+}

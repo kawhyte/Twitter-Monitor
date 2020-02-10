@@ -7,8 +7,10 @@ const nodemailer = require("nodemailer");
 let separateReqPool = { maxSockets: 15 };
 let async = require("async");
 let tweets = {},
-  currentTweets = {};
-(apiurls = []), (N = []);
+  // lastTweet  = {};
+  apiurls = [],
+  N = [],
+  tempArray = [];
 
 let keyword = [
   "help me",
@@ -63,43 +65,52 @@ setInterval(() => {
       ) {
         try {
           const $ = cheerio.load(body);
-          let turl = "https://twitter.com" + response.req.patwitterHandle;
+          let turl = "https://twitter.com" + response.req.path;
           // console.log("cheerio", $("div.js-tweet-text-container p")
           // .eq(0)
           // .text());
           // console.log($( "cheerio lengtwitterHandle", "div.js-tweet-text-container p").lengtwitterHandle)
 
-          lastTweet = $("div.js-tweet-text-container p")
+          let lastTweet = $("div.js-tweet-text-container p")
             .eq(0)
             .text()
             .toLowerCase();
+          // console.log("lastTweet", lastTweet);
+          // console.log("tweets[turl]", tweets[turl]);
 
+          // console.log(
+          //   "before tweets[turl]",
+          //   tweets[turl].indexOf(lastTweet) === -1
+          // );
+          console.log('Checking if items  should be added to tweets[turl] array ')
           if (tweets[turl].indexOf(lastTweet) === -1) {
             // lastTweet.split(",")
-            tweets[turl].push(lastTweet);
-          }
 
+            tweets[turl].push(lastTweet);
+            console.log("Added");
+          }
+          // console.log("after tweets[turl] ",tweets[turl])
           // console.log("currentTweets[turl]", tweets[turl]);
 
           // console.log("stop");
 
-          if (!tweets[turl].lengtwitterHandle) {
-            // console.log(" First Load");
-            //FIRST LOAD
-            //for (
-            //   let i = 0;
-            // i < $("div.js-tweet-text-container p").lengtwitterHandle;
-            //   i <= 1;
-            //   i++
-            // ) {
-            // tweets[turl].push(
-            //   $("div.js-tweet-text-container p")
-            //     .eq(0)
-            //     .text()
-            //     .toLowerCase()
-            // );
-            //  console.log(tweets[turl]);
-          }
+          //if (!tweets[turl].lengtwitterHandle) {
+          // console.log(" First Load");
+          //FIRST LOAD
+          //for (
+          //   let i = 0;
+          // i < $("div.js-tweet-text-container p").lengtwitterHandle;
+          //   i <= 1;
+          //   i++
+          // ) {
+          // tweets[turl].push(
+          //   $("div.js-tweet-text-container p")
+          //     .eq(0)
+          //     .text()
+          //     .toLowerCase()
+          // );
+          //  console.log(tweets[turl]);
+          //}
           //} else {
           //EVERY OtwitterHandleER TIME
           for (
@@ -141,28 +152,41 @@ setInterval(() => {
               //     name: twitterHandle_name
               //   });
               // } else {
-              console.log("tweets[turl]", tweets[turl]);
-              console.log("(kw)", kw);
+              // console.log("tweets[turl]", tweets[turl]);
+              // console.log("(kw)", kw);
 
-              let IstwitterHandleistrue = wordInString(tweets[turl], kw);
+              // let IstwitterHandleistrue = wordInString(tweets[turl], kw);
 
-              console.log("IstwitterHandleistrue ", IstwitterHandleistrue);
+              // console.log("IstwitterHandleistrue ", IstwitterHandleistrue);
               // console.log("tweets[turl]", tweets[turl])
               // console.log("tweets[turl].indexOf(kw) === 1", tweets[turl].indexOf(kw))
 
-              // console.log(" s_tweet.indexOf(kw) === 1 ", s_tweet)
+              // console.log("for each", wordInString(tweets[turl], kw));
+              // console.log("email sent", tweets[turl].emailSent);
 
               if (wordInString(tweets[turl], kw)) {
                 // if (kw.indexOf(tweets[turl]) === 1) {
-                N.push({
-                  tweet: s_tweet,
-                  name: twitterHandle_name
-                });
-                console.log("inside if N array ", N);
+                //tweets[turl].processed = true
+
+                // console.log("tempArray", tempArray);
+
+                console.log('Checking if items  should be added to temp and N array ')
+
+                if (tempArray.indexOf(lastTweet) === -1) {
+                  tempArray.push(lastTweet);
+
+                  N.push({
+                    tweet: s_tweet,
+                    name: twitterHandle_name
+                  });
+
+                  console.log("added to arrays ");
+                }
+                
               }
               //}
             });
-            console.log("outside for N array ", N);
+            // console.log("outside for N array ", N);
             //}
           }
           //}
@@ -182,14 +206,16 @@ function wordInString(s, word) {
 }
 
 setInterval(() => {
-  // console.log('twitterHandlee N, ', N)
-  if (N.lengtwitterHandle) {
+  console.log('Checking if email shoukd be sent ')
+  if (N.length) {
     let n = N.shift();
-    console.log("twitterHandleis is n", n);
+    // console.log("twitterHandleis is n", n);
     notifier.notify({ title: n.name, message: n.tweet, sound: true }, function(
       err,
       response
     ) {
+      console.log("Email seeeent !");
+      // console.log(n);
       // SendEmail(n.tweet, n.name);
       //console.log("twitterHandleisis twitterHandlee response", response);
       // alert(response);

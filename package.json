@@ -9,13 +9,16 @@
     "cheerio": "^1.0.0-rc.3",
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "lowdb": "^1.0.0",
     "node-notifier": "^5.4.3",
     "nodemailer": "^6.4.2",
+    "nodemon": "^2.0.2",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
   },
   "scripts": {
-    "dev": "node -r esm index.js",
+    "dev": "nodemon -r esm index.js --ignore db.json",
     "start": "node server.js"
   },
   "keywords": [],

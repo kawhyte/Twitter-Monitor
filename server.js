@@ -11,7 +11,7 @@ let tweets = {},
   apiurls = [],
   N = [],
   tempArray = [];
-
+let keyword2 =["permission" ];
 let keyword = [
   "help me",
   "schedule wc",
@@ -28,15 +28,16 @@ let keyword = [
   "familyact",
   "familyvalues",
   "paidleave",
-  "paidsickdays"
+  "paidsickdays", 
+  "announcing" 
 ];
 ///////////////////////////  TWITTER HANDLE TO MONITOR /////////////////////////////////////////////////////
 let twitterHandles = [
-  // {
-  //   name: "@IAmKenny",
-  //   url: "https://twitter.com/IAmKennyWhyte?lang=en",
-  //   keywords: keyword
-  // },
+  {
+    name: "@IAmKenny",
+    url: "https://twitter.com/IAmKennyWhyte?lang=en",
+    keywords: keyword2
+  },
   {
     name: "@IAmReneWhyte",
     url: "https://twitter.com/IAmReneWhyte?lang=en",
@@ -69,36 +70,39 @@ setInterval(() => {
             .eq(0)
             .text()
             .toLowerCase();
-    
-          console.log('Checking if items  should be added to tweets[turl] array ')
-          if (tweets[turl].indexOf(lastTweet) === -1) {
 
+          console.log(
+            "Checking if items  should be added to tweets[turl] array "
+          );
+          // console.log('lastTweet',lastTweet)
+          // console.log('lastTweet',tweets[turl])
+          if (tweets[turl].indexOf(lastTweet) === -1) {
             tweets[turl].push(lastTweet);
             console.log("Added");
+            console.log("tweets[turl] after added", tweets[turl]);
           }
-  
+
           for (
             let i = 0;
             // i < $("div.js-tweet-text-container p").lengtwitterHandle;
             i < 1;
             i++
           ) {
-          
             const s_tweet = $("div.js-tweet-text-container p")
               .eq(0)
               .text()
               .toLowerCase();
 
-       
-            //   .name;
-            let twitterHandle_name = "Kenny";
+ 
+              let twitterHandle_name = twitterHandles.filter((d, i) => d.url === turl)[0]
+              .name;
+         
             // twitterHandle_kw.forEach((kw, j) => {
             keyword.forEach((kw, j) => {
-      
-
               if (wordInString(tweets[turl], kw)) {
-
-                console.log('Checking if items  should be added to temp and N array ')
+                console.log(
+                  "Checking if items  should be added to temp and N array "
+                );
 
                 if (tempArray.indexOf(lastTweet) === -1) {
                   tempArray.push(lastTweet);
@@ -110,13 +114,9 @@ setInterval(() => {
 
                   console.log("added to arrays ");
                 }
-                
               }
-          
             });
-  
           }
-          
         } catch (e) {
           console.log("Error =>" + e);
         }
@@ -128,31 +128,49 @@ setInterval(() => {
   );
 }, 5 * 1000); //RUNS EVERY 5 SECONDS
 
-
-
 setInterval(() => {
-  console.log('Checking if email shoukd be sent ')
+  console.log("Checking if email shoukd be sent ");
   if (N.length) {
-    let n = N.shift();
+
+    for (const key in N) {
+      if (N.hasOwnProperty(key)) {
+        const element = N[key];
+        console.log("element ",element)
+      }
+    }
+    
+   for (let index = 0; index < N.length; index++) {
+     
+    
+    
+     
+   console.log("index ", index);
+   console.log("index ", N[index]);
+
+    //let n = N[index].shift();
     // console.log("twitterHandleis is n", n);
-    notifier.notify({ title: n.name, message: n.tweet, sound: true }, function(
+    notifier.notify({ title: N[index].name, message: N[index].tweet, sound: true }, function(
       err,
       response
     ) {
       console.log("Email seeeent !");
-      // console.log(n);
-      // SendEmail(n.tweet, n.name);
+      SendEmail(N[index].tweet, N[index].name);
       //console.log("twitterHandleisis twitterHandlee response", response);
       // alert(response);
       // Response is response from notification
+      let removed = N.shift();
+      console.log("Removed " ,  removed);
     });
+
+}
+  
   }
 }, 500);
 
 function SendEmail(tweet, name) {
   let transporter = nodemailer.createTransport({
     service: "gmail",
-    autwitterHandle: {
+    auth: {
       user: process.env.EMAIL,
       pass: process.env.PASSWORD
     }

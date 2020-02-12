@@ -53,7 +53,9 @@ twitterHandles.forEach((twitterHandle, i) => {
 });
 
 //MONITOR
-setInterval(() => {
+// setInterval(() => {
+
+async function runMonitorCron(){
   async.map(
     apiurls,
     function(item, callback) {
@@ -112,6 +114,9 @@ setInterval(() => {
                     name: twitterHandle_name
                   });
 
+
+                  
+
                   console.log("added to arrays ");
                 }
               }
@@ -126,8 +131,13 @@ setInterval(() => {
       //console.log(results);
     }
   );
-}, 5 * 1000); //RUNS EVERY 5 SECONDS
 
+}
+//}, 5 * 1000); //RUNS EVERY 5 SECONDS
+
+
+
+// SENT EMAIL
 setInterval(() => {
   console.log("Checking if email shoukd be sent ");
   if (N.length) {
@@ -196,3 +206,5 @@ function SendEmail(tweet, name) {
 function wordInString(s, word) {
   return new RegExp("\\b" + word + "\\b", "i").test(s);
 }
+
+export { runMonitorCron};

@@ -68,6 +68,13 @@ app.get("/scrape", async (req, res, next) => {
   // res.json(tweet);
 });
 
+
+
+app.get(`/data`, async (req, res, next) => {
+
+
+  
+});
 // async function loop (urls){
 // let obj = [];
 //   console.log(urls)

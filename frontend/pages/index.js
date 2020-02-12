@@ -1,4 +1,11 @@
-export default  function Home() {
+import Page from '../components/Page';
+import Data from '../components/Data';
 
-    return <p> Hello Kenny</p>
+
+export default function Home() {
+  return (
+ 
+      <h2>Home Page!</h2>
+   
+  );
 }

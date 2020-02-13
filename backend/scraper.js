@@ -25,10 +25,9 @@ async function getTwitterTweets(html) {
 }
 
 async function runCron() {
-
   console.log(" Started Cron job ");
 
-///////  KEYWORDS /////////
+  ///////  KEYWORDS /////////
   let keyword = [
     "help me",
     "schedule wc",
@@ -47,29 +46,33 @@ async function runCron() {
     "paidleave",
     "paidsickdays",
     "announcing",
-    "learnable", "permission", "dictate"
+    "learnable",
+    "permission",
+    "dictate"
   ];
 
-
-///////  ACCOUNTS /////////
-  let urls = ["IAmReneWhyte", "florinpop1705", "DasSurma", "IAmKennyWhyte", "GovernorKayIvey",
-"GovDunleavy",
-  "dougducey",
-  "AsaHutchinson",
-  "GavinNewsom",
-  "jaredpolis",
-  "GovNedLamont",
-  "JohnCarneyDE",
-  "GovRonDeSantis",
-  "BrianKempGA",
-  "GovHawaii",
-  "GovernorLittle",
-  "JBPritzker"].map(
-    (game, i) => {
-      return `https://twitter.com/${game}`;
-    }
-  );
-
+  ///////  ACCOUNTS /////////
+  let urls = [
+    "IAmReneWhyte",
+    "florinpop1705",
+    "DasSurma",
+    "IAmKennyWhyte",
+    "GovernorKayIvey",
+    "GovDunleavy",
+    "dougducey",
+    "AsaHutchinson",
+    "GavinNewsom",
+    "jaredpolis",
+    "GovNedLamont",
+    "JohnCarneyDE",
+    "GovRonDeSantis",
+    "BrianKempGA",
+    "GovHawaii",
+    "GovernorLittle",
+    "JBPritzker"
+  ].map((game, i) => {
+    return `https://twitter.com/${game}`;
+  });
 
   for (let index = 0; index < urls.length; index++) {
     const html = await getHTML(urls[index]);
@@ -80,26 +83,29 @@ async function runCron() {
       .find({ name: tweet.name })
       .value();
 
-    if (Object.values(value.message).indexOf(tweet.tweets) !== -1) {
+    console.log("VALUE ", value);
+    console.log("VALUE TYPE", typeof (value));
+
+    if (( (typeof value === 'undefined') || Object.values(value.message).indexOf(tweet.tweets) !== -1)) {
       db.get("twitter")
         .push({
           date: Date.now(),
           message: tweet.tweets,
           name: tweet.name,
-          notificationSent: tweet.notificationSent
+          notificationSent: false
         })
         .write();
 
       console.log("value added to database!!!");
     }
 
-      keyword.forEach((kw, j) => {
-        if (wordInString(tweet.tweets, kw)) {
-          console.log("keyword Found!!", tweet.name, kw) ;
-          
-          sendNotification(tweet);
-        }
-      })
+    keyword.forEach((kw, j) => {
+      if (wordInString(tweet.tweets, kw)) {
+        console.log("keyword Found!!", tweet.name, kw);
+
+        sendNotification(tweet);
+      }
+    });
   }
   console.log("DONE!!!");
 }
@@ -109,25 +115,21 @@ async function sendNotification(tweet) {
   console.log("sendNotification!!!");
 
   let value = db
-  .get("twitter")
-  .find({ name: tweet.name })
-  .value();
+    .get("twitter")
+    .find({ name: tweet.name })
+    .value();
 
-
-   console.log("notificationSent ", value.notificationSent);
+  console.log("notificationSent ", value.notificationSent);
 
   if (value.notificationSent === false) {
+    db.get("twitter")
+      .find({ name: tweet.name })
+      .assign({ notificationSent: true })
+      .write();
 
-    db.get('twitter')
-    .find({ name: tweet.name })
-    .assign({ notificationSent: true})
-    .write()
-   
     sendEmail(value.message, value.name);
     console.log("Email seeeent !");
-
   }
-
 }
 
 function sendEmail(tweet, name) {
@@ -160,4 +162,4 @@ function wordInString(s, word) {
   return new RegExp("\\b" + word + "\\b", "i").test(s);
 }
 
-export { getHTML, getTwitterTweets, runCron};
+export { getHTML, getTwitterTweets, runCron };

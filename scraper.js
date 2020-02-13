@@ -54,6 +54,7 @@ async function runCron() {
   ///////  ACCOUNTS /////////
   let urls = [
     "IAmReneWhyte",
+    "wesbos",
     "florinpop1705",
     "DasSurma",
     "IAmKennyWhyte",

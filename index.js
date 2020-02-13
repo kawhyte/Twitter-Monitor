@@ -3,7 +3,12 @@ import { getHTML, getTwitterTweets } from "./scraper";
 import db from "./db";
 import  "./cron";
 
+const express = require("express");
 const app = express();
+
+app.use(express.json());
+
+app.use(express.static("public"));
 
 // READ
 app.get("/scrape", async (req, res, next) => {
@@ -22,27 +27,7 @@ app.get("/scrape", async (req, res, next) => {
     }
   );
 
-  // const options = {
-  //   headers: new Headers({
-  //     Accept: "application/json",
-  //     Authorization: "Basic",
-  //     "Content-Type": "application/x-www-form-urlencoded",
-  //     Host: "api.rawg.io",
-  //     "User-Agent": "Video Game Of the Year/hulkbaby2@gmail.com"
-  //   }),
-  //   method: "GET"
-  // };
 
-  // const  dataa = await Promise.all(urls.map(url => getHTML(url)))
-  //   //.then(resp => Promise.all(resp.map(r => r.json())))
-  //   .then(data => {
-
-  //     const tweet =  getTwitterTweets(data);
-  //     console.log("TWEET ",tweet);
-  //     //const html = data.map(generateHTML).join("");
-  //     //console.log(html);
-  //     //gallery.innerHTML = html;
-  //   });
 
   
 

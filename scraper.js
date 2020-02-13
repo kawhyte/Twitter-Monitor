@@ -48,7 +48,7 @@ async function runCron() {
     "announcing",
     "learnable",
     "permission",
-    "dictate"
+    "dictate", "San Diego","Intuit", "#Intuit", "session"
   ];
 
   ///////  ACCOUNTS /////////

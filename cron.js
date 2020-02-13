@@ -11,6 +11,5 @@ cron.schedule('* * * * *', () => {
 
 // cron.schedule('* * * * *', () => {
 //     console.log('running a cron every 1 minute');
-
 //    runSendEmailCron();
 //   });

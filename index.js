@@ -2,12 +2,16 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-import express from "express";
+// import express from "express";
 import { getHTML, getTwitterTweets } from "./scraper";
 import db from "./db";
 import  "./cron";
 
+const express = require('express');
+const favicon = require('express-favicon');
 const app = express();
+
+app.use(favicon(__dirname + '/public/favicon.png'));
 
 app.use(express.json());
 
@@ -58,11 +62,11 @@ app.get("/scrape", async (req, res, next) => {
 
 
 
-app.get(`/data`, async (req, res, next) => {
+// app.get(`/data`, async (req, res, next) => {
 
 
   
-});
+// });
 // async function loop (urls){
 // let obj = [];
 //   console.log(urls)
@@ -95,4 +99,8 @@ app.get(`/data`, async (req, res, next) => {
 
 // }
 
-app.listen(8887, () => console.log("Scraping app listening on port 8887!"));
+const server = app.listen(3000, function(){
+  console.log('server is running at %s .', server.address().port);
+});
+
+// app.listen(8887, () => console.log("Scraping app listening on port 8887!"));

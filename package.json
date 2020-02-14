@@ -10,6 +10,7 @@
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "express-favicon": "^2.0.1",
     "lowdb": "^1.0.0",
     "node-cron": "^2.0.3",
     "node-notifier": "^5.4.3",

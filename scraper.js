@@ -18,7 +18,7 @@ async function getTwitterTweets(html) {
 
   const imageLink =  $(".js-user-profile-link").find("img").eq(0).attr('src');
   // console.log("FIND" , image.find(".js-action-profile-avatar").find("img").eq(0).attr('src'));
-  console.log("IMAGE ", imageLink)
+  // console.log("IMAGE ", imageLink)
 
   const name = $("h2 a span b");
 
@@ -30,6 +30,8 @@ async function getTwitterTweets(html) {
 
 async function runCron() {
   console.log(" Started Cron job ");
+  let counter = 0;
+  let counter2 = 0;
 
   ///////  KEYWORDS /////////
   let keyword = [
@@ -58,10 +60,10 @@ async function runCron() {
   ///////  ACCOUNTS /////////
   let urls = [
     "IAmReneWhyte",
+    "IAmKennyWhyte",
     "wesbos",
     "florinpop1705",
     "DasSurma",
-    "IAmKennyWhyte",
     "GovernorKayIvey",
     "GovDunleavy",
     "dougducey",
@@ -79,6 +81,12 @@ async function runCron() {
     return `https://twitter.com/${game}`;
   });
 
+  // let urls = [
+  //   "IAmKennyWhyte",
+  // ].map((game, i) => {
+  //   return `https://twitter.com/${game}`;
+  // });
+
   for (let index = 0; index < urls.length; index++) {
     const html = await getHTML(urls[index]);
     const tweet = await getTwitterTweets(html);
@@ -88,10 +96,12 @@ async function runCron() {
       .find({ name: tweet.name })
       .value();
 
-    // console.log("VALUE ", value);
-    // console.log("VALUE TYPE", typeof (value));
+    console.log("(typeof value === 'undefined') ", (typeof value === 'undefined'));
+    console.log("COMP ", Object.values(value.message).indexOf(tweet.tweets) !== -1);
+    console.log("value.message ", value.message);
+    console.log("TWEET tweet.tweets ", tweet.tweets);
 
-    if (( (typeof value === 'undefined') || Object.values(value.message).indexOf(tweet.tweets) !== -1)) {
+    if  (typeof value === 'undefined') {
       db.get("twitter")
         .push({
           date: Date.now(),
@@ -101,8 +111,20 @@ async function runCron() {
           notificationSent: false
         })
         .write();
+        counter2++
+      console.log(`${counter2}  - New tweets added to database!!!`);
+    } else if ( Object.values(value.message).indexOf(tweet.tweets) === -1){
 
-      console.log("value added to database!!!");
+      db.get("twitter")
+      .find({ name: tweet.name })
+      .assign({ 
+        date: Date.now(),
+        message: tweet.tweets,
+        notificationSent: false })
+      .write();
+
+      counter++
+      console.log(`${counter} tweet updated in  database!!!`);
     }
 
     keyword.forEach((kw, j) => {

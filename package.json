@@ -20,7 +20,7 @@
   },
   "scripts": {
     "dev": "nodemon -r esm index.js --ignore db.json",
-    "start": "node -r esm index.js --ignore db.json"
+    "start": "node -r esm index.js"
   },
   "keywords": [],
   "author": "",

@@ -25,6 +25,8 @@ const gallery = document.querySelector(".game-gallery");
 
 
 
+document.addEventListener('DOMContentLoaded', function(){
+  console.log('Loaded page');
 
 
 
@@ -159,3 +161,5 @@ console.log("OUTSIDE", html)
 //     // });
 
 //       });
+
+});

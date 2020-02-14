@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // READ
-app.get("/scrape", async (req, res, next) => {
+app.get("/", async (req, res, next) => {
   console.log("scraping");
   let tweets = [];
   //  let result = go();
@@ -99,8 +99,14 @@ app.get("/scrape", async (req, res, next) => {
 
 // }
 
-const server = app.listen(3000, function(){
-  console.log('server is running at %s .', server.address().port);
-});
+// const server = app.listen(3000, function(){
+//   console.log('server is running at %s .', server.address().port);
+// });
 
+
+const server_port = process.env.YOUR_PORT || process.env.PORT || 3000;
+const server_host = process.env.YOUR_HOST || '0.0.0.0';
+app.listen(server_port, server_host, function() {
+    console.log('Listening on port %d', server_port);
+});
 // app.listen(8887, () => console.log("Scraping app listening on port 8887!"));

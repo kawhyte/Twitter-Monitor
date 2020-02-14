@@ -4,7 +4,7 @@ import {runCron}  from './scraper'
 cron.schedule('*/3 * * * *', () => {
     console.log('running a cron every minute');
 
-    runCron();
+    //runCron();
     // runMonitorCron();
     //runSendEmailCron();
   });

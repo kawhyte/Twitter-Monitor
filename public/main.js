@@ -70,7 +70,7 @@ const gallery = document.querySelector(".game-gallery");
   // );
 
 
-fetch('/db.json',  
+fetch('/public/db.json',  
 {
   headers : { 
     'Content-Type': 'application/json',

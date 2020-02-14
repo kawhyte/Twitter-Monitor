@@ -341,6 +341,13 @@ html, body, .grid-container { height: 100%; margin: 0; }
 
  }  
 
+
+ .head-label{
+ text-align: center;
+ /* background-color: #ffa3d7; */
+
+
+ }
  @media only screen and (max-width: 1000px) {
     .emoticon-size img {
        display: none;

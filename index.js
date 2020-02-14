@@ -11,7 +11,7 @@ const express = require('express');
 const favicon = require('express-favicon');
 const app = express();
 
-app.use(favicon(__dirname + '/public/favicon.png'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.use(express.json());
 

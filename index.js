@@ -1,9 +1,13 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 import express from "express";
 import { getHTML, getTwitterTweets } from "./scraper";
 import db from "./db";
 import  "./cron";
 
-const express = require("express");
+
 const app = express();
 
 app.use(express.json());

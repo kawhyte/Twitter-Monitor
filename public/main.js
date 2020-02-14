@@ -43,10 +43,10 @@ const gallery = document.querySelector(".game-gallery");
     // const background_image = data.background_image;
     // const released  = data.twitter[2].message;
     return `
-    <div class="div${index+1}"> 
+    <div class="div${index+1} container"> 
     <article class="mw5 center bg-white br3 pa5 pa4-ns mv3 ba b--black-20">
         <div class="tc">
-          <img src="http://tachyons.io/img/avatar_1.jpg" class="br-100 h3 w3 dib" title="Photo of a kitty staring at you">
+          <img src=${data.link} class="br-100 h3 w3 dib" title="Photo of a kitty staring at you">
           <h1 id="twitter_handle" class="f4">${data.name}</h1>
           <hr class="mw3 bb bw1 b--black-10">
         </div>

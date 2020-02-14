@@ -16,11 +16,15 @@ async function getTwitterTweets(html) {
   // load cheerio
   const $ = cheerio.load(html);
 
+  const imageLink =  $(".js-user-profile-link").find("img").eq(0).attr('src');
+  // console.log("FIND" , image.find(".js-action-profile-avatar").find("img").eq(0).attr('src'));
+  console.log("IMAGE ", imageLink)
+
   const name = $("h2 a span b");
 
   const span = $("div.js-tweet-text-container p");
 
-  const value = { name: name.html(), tweets: span.html() };
+  const value = { name: name.html(), tweets: span.html(), imageLink };
   return value;
 }
 
@@ -84,8 +88,8 @@ async function runCron() {
       .find({ name: tweet.name })
       .value();
 
-    console.log("VALUE ", value);
-    console.log("VALUE TYPE", typeof (value));
+    // console.log("VALUE ", value);
+    // console.log("VALUE TYPE", typeof (value));
 
     if (( (typeof value === 'undefined') || Object.values(value.message).indexOf(tweet.tweets) !== -1)) {
       db.get("twitter")
@@ -93,6 +97,7 @@ async function runCron() {
           date: Date.now(),
           message: tweet.tweets,
           name: tweet.name,
+          link: tweet.imageLink,
           notificationSent: false
         })
         .write();
@@ -120,7 +125,7 @@ async function sendNotification(tweet) {
     .find({ name: tweet.name })
     .value();
 
-  console.log("notificationSent ", value.notificationSent);
+  // console.log("notificationSent ", value.notificationSent);
 
   if (value.notificationSent === false) {
     db.get("twitter")

@@ -25,7 +25,6 @@ const gallery = document.querySelector(".game-gallery");
 
 
 
-document.addEventListener('DOMContentLoaded', function(){
   console.log('Loaded page');
 
 
@@ -58,28 +57,6 @@ document.addEventListener('DOMContentLoaded', function(){
       </div>
   `;
   }
-  
-  
-  
-  
-
-
-  
-  
-  
-  const options = {
-    headers: new Headers({
-      Accept: "application/json",
-      Authorization: "Basic",
-      "Content-Type": "application/x-www-form-urlencoded",
-      Host: "api.rawg.io",
-      "User-Agent": "Video Game Of the Year/hulkbaby2@gmail.com"
-    }),
-    method: "GET"
-  };
-  
-
-
 
   //  fetch('/db.json', options)
   // .then(resp => { return resp.json()})
@@ -92,18 +69,25 @@ document.addEventListener('DOMContentLoaded', function(){
   // }
   // );
 
-let newHtml = ""
-fetch('/db.json')
+
+fetch('/db.json',  
+{
+  headers : { 
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+   }
+
+}
+
+)
+
+
 .then(r => r.json())
 .then(json => {
   var html = json.twitter.map((currElement, index) => {
   
   return html = generateHTML(currElement, index);
-
- 
-
-  // var groupTag = json.twitter.map(current => current.tag);
-  // console.log('groupName', html);         
+    
       
 }).join(' ')
 console.log("OUTSIDE", html)
@@ -111,55 +95,3 @@ console.log("OUTSIDE", html)
 
 });
 
-
-// fetch('/db.json')
-// .then(r => r.json())
-// .then(json => {
-
-//   console.log(json.twitter)
-
-//   json.twitter.map((currElement, index) => {
-
-//     console.log("The current iteration is: " + index);
-//     console.log("The current element is: " + currElement[0].message);
-//     console.log("\n");
-//     return currElement; //equivalent to list[index]
-//   })
-
-//   var html = json.twitter.map(generateHTML).join("");
-
-
-//   var groupTag = json.twitter.map(current => current.tag);
-//   console.log('groupName', html);         
-//   gallery.innerHTML = html;      
-// });
-
-
-
-//  fetch('/db.json', options)
-
-//   .then(response => {
-//     return response.json();
-//   })
-    
-//     .then(data => {
-//       console.log(data);
-  
-
-
-
-      
-//        const html = data.map(function(val,i) {
-//         generateHTML(val)
-//        });
-//        //.join("")
-//       // console.log(html);
-//       // gallery.innerHTML = html;
-//     // }).catch(err => {
-//     //   console.log( "Error.", err)
-      
-//     // });
-
-//       });
-
-});

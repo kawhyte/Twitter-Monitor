@@ -69,8 +69,8 @@ const gallery = document.querySelector(".game-gallery");
   // }
   // );
 
-
-fetch('/public/db.json',  
+  console.log('Before fetch in main.js');
+fetch('./db.json',  
 {
   headers : { 
     'Content-Type': 'application/json',

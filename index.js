@@ -7,7 +7,6 @@ import { getHTML, getTwitterTweets } from "./scraper";
 import db from "./db";
 import  "./cron";
 
-
 const app = express();
 
 app.use(express.json());

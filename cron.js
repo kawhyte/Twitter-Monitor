@@ -1,7 +1,7 @@
 let cron = require('node-cron');
 import {runCron}  from './scraper'
 
-cron.schedule('* * * * *', () => {
+cron.schedule('*/3 * * * *', () => {
     console.log('running a cron every minute');
 
     runCron();

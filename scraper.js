@@ -56,7 +56,7 @@ async function getTwitterTweets(html) {
 
       tweetText: $("div.js-tweet-text-container p")
         .eq(i)
-        .text(),
+        .html(),
 
       image: $('.ProfileAvatar-container')
       .eq(i)

@@ -56,7 +56,7 @@ async function getTwitterTweets(html) {
 
       tweetText: $("div.js-tweet-text-container p")
         .eq(i)
-        .html(),
+        .text(),
 
       image: $('.ProfileAvatar-container')
       .eq(i)
@@ -223,7 +223,7 @@ console.log("tweet.imageLink NEW++++ " , tweet.imageLink)
       if (wordInString(tweet.tweets, kw)) {
         console.log("keyword Found!!", tweet.name, kw);
 
-        sendNotification(tweet);
+        // sendNotification(tweet);
       }
     });
   }
@@ -266,7 +266,6 @@ function sendEmail(tweet, name) {
   let mailOptions = {
     from: process.env.EMAIL,
     to: process.env.EMAILTO,
-    cc: process.env.EMAILCC,
     subject: `Hey, ${name} just tweeted about Paid family leave`,
     text: `Tweet: ${tweet}`
   };

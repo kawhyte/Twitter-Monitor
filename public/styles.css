@@ -348,6 +348,12 @@ html, body, .grid-container { height: 100%; margin: 0; }
 
 
  }
+ .svg-size{
+    max-width:230%;
+    max-height:230%;
+
+
+ }
  @media only screen and (max-width: 1000px) {
     .emoticon-size img {
        display: none;

@@ -110,8 +110,7 @@ async function runCron() {
 
   ///////  KEYWORDS /////////
   let keyword = [
-    "help me",
-    "schedule wc",
+  
     "paid family leave",
     "#paidfamilyleave",
     "Paidleave",
@@ -138,11 +137,20 @@ async function runCron() {
 
   ///////  ACCOUNTS /////////
   let urls = [
+    "FamilyEconomyVA",
+    "NCLeg",
+    "PaLegis",
+    "GovMLG",
+    "DCPaidLeave",
+    "PaidLeaveforCT",
+    "GovJanetMills",
+    "GovChrisSununu",
+    "StateMaryland",
+    "NJDOLCommish",
+    "OregonCapitol",
+    "MomsRising",
     "IAmReneWhyte",
     "IAmKennyWhyte",
-    "wesbos",
-    "florinpop1705",
-    "DasSurma",
     "GovernorKayIvey",
     "GovDunleavy",
     "dougducey",
@@ -215,7 +223,7 @@ console.log("tweet.imageLink NEW++++ " , tweet.imageLink)
       if (wordInString(tweet.tweets, kw)) {
         console.log("keyword Found!!", tweet.name, kw);
 
-        // sendNotification(tweet);
+        sendNotification(tweet);
       }
     });
   }

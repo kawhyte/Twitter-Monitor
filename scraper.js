@@ -19,12 +19,20 @@ async function getTwitterTweets(html) {
   // load cheerio
   const $ = cheerio.load(html);
 
+  
+
   // const imageLink = $(".js-user-profile-link ")
   //   .find("img")
   //   .eq(0)
   //   .attr("src");
+  const imageLink = $('.ProfileAvatar-container')
+  .eq(0)
+  .attr("data-url")//.find("img").eq(0).attr('style')
+  
+
   // console.log("FIND" , image.find(".js-action-profile-avatar").find("img").eq(0).attr('src'));
-  // console.log("IMAGE ", imageLink)
+  console.log("IMAGE ", imageLink)
+  // console.log("test ", test.html())
 
   // const name = $("h2 a span b");
 
@@ -50,10 +58,9 @@ async function getTwitterTweets(html) {
         .eq(i)
         .text(),
 
-      image: $(".js-user-profile-link ")
-        .find("img")
-        .eq(0)
-        .attr("src")
+      image: $('.ProfileAvatar-container')
+      .eq(i)
+      .attr("data-url")
     });
 
 
@@ -73,18 +80,21 @@ async function getTwitterTweets(html) {
 
   let latestTweetTime = dateArray.sort((compareDesc));
  
-  console.log("FirstTweetTime ", latestTweetTime[0]);
+  // console.log("FirstTweetTime ", latestTweetTime[0]);
 
-  
+  console.log("tweetArray-- ", tweetArray);
 
   let result = tweetArray.filter(obj => {
     return obj.date === (latestTweetTime[0])
   })
 
+
+  console.log("RESULT-- ", result);
+
   const value = {
     name: result[0].name,
     tweets: result[0].tweetText,
-    imageLink: result[0].image,
+    imageLink: tweetArray[0].image,
     dateTweeted: result[0].date
   };
 
@@ -150,7 +160,8 @@ async function runCron() {
     return `https://twitter.com/${game}`;
   });
 
-  // let urls = ["IAmKennyWhyte", "IAmReneWhyte", "wesbos"].map((game, i) => {
+  // let urls = ["wesbos",
+  // "florinpop1705"].map((game, i) => {
   //   return `https://twitter.com/${game}`;
   // });
 
@@ -164,9 +175,11 @@ async function runCron() {
       .value();
 
 
-      console.log("OBJECT ",(Object.values(value.message).indexOf(tweet.tweets) > -1))
+     console.log("HELLO====>>>> ",tweet.imageLink)
 
     if (typeof value === "undefined") {
+console.log("tweet.imageLink NEW++++ " , tweet.imageLink)
+
       db.get("twitter")
         .push({
           date: Date.now(),
@@ -180,11 +193,15 @@ async function runCron() {
       counter2++;
       console.log(`${counter2}  - New tweets added to database!!!`);
     } else if ((Object.values(value.message).indexOf(tweet.tweets) === -1)) {
+
+      console.log("tweet.imageLink UPDATE++ " , tweet.imageLink)
       db.get("twitter")
         .find({ name: tweet.name })
         .assign({
           date: Date.now(),
           message: tweet.tweets,
+          name: tweet.name,
+          link: tweet.imageLink,
           dateTweeted: tweet.dateTweeted,
           notificationSent: false
         })

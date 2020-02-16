@@ -7,7 +7,7 @@ const FileSync = require('lowdb/adapters/FileSync')
 const adapter = new FileSync('./public/db.json')
 const db = low(adapter)
 
-db.defaults({ twitter: [], user: {}, count: 0 })
+db.defaults({ twitter: [], count: 0 })
   .write();
 
   // Add a post

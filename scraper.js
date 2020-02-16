@@ -4,7 +4,7 @@ const axios = require("axios");
 require("dotenv").config();
 const notifier = require("node-notifier");
 const nodemailer = require("nodemailer");
-import { compareAsc, format, compareDesc } from "date-fns";
+import { compareAsc, format, compareDesc, formatDistance, subDays } from "date-fns";
 import db from "./db";
 
 async function getHTML(url) {
@@ -14,24 +14,21 @@ async function getHTML(url) {
 }
 
 async function getTwitterTweets(html) {
- let dateArray = [];
- let tweetArray = [];
+  let dateArray = [];
+  let tweetArray = [];
   // load cheerio
   const $ = cheerio.load(html);
-
-  
 
   // const imageLink = $(".js-user-profile-link ")
   //   .find("img")
   //   .eq(0)
   //   .attr("src");
-  const imageLink = $('.ProfileAvatar-container')
-  .eq(0)
-  .attr("data-url")//.find("img").eq(0).attr('style')
-  
+  const imageLink = $(".ProfileAvatar-container")
+    .eq(0)
+    .attr("data-url"); //.find("img").eq(0).attr('style')
 
   // console.log("FIND" , image.find(".js-action-profile-avatar").find("img").eq(0).attr('src'));
-  console.log("IMAGE ", imageLink)
+  // console.log("IMAGE ", imageLink);
   // console.log("test ", test.html())
 
   // const name = $("h2 a span b");
@@ -49,47 +46,46 @@ async function getTwitterTweets(html) {
     tweetArray.push({
       name: $("h2 a span b").html(),
 
-      date: parseInt($(".time")
-        .find("span")
-        .eq(i)
-        .attr("data-time-ms"),10),
+      date: parseInt(
+        $(".time")
+          .find("span")
+          .eq(i)
+          .attr("data-time-ms"),
+        10
+      ),
 
       tweetText: $("div.js-tweet-text-container p")
         .eq(i)
-        .text(),
+        .html(),
 
-      image: $('.ProfileAvatar-container')
-      .eq(i)
-      .attr("data-url")
+      image: $(".ProfileAvatar-container")
+        .eq(i)
+        .attr("data-url")
     });
 
-
     let milliseconds = $(".time")
-    .find("span")
-    .eq(i)
-    .attr("data-time-ms");
+      .find("span")
+      .eq(i)
+      .attr("data-time-ms");
 
-    
     let integer = parseInt(milliseconds, 10);
-  
 
-    dateArray.push(
-      integer
-    );
+    dateArray.push(integer);
   }
 
-  let latestTweetTime = dateArray.sort((compareDesc));
- 
+  let latestTweetTime = dateArray.sort(compareDesc);
+
   // console.log("FirstTweetTime ", latestTweetTime[0]);
 
-  console.log("tweetArray-- ", tweetArray);
+  // console.log("tweetArray-- ", tweetArray);
 
   let result = tweetArray.filter(obj => {
-    return obj.date === (latestTweetTime[0])
-  })
+    return obj.date === latestTweetTime[0];
+  });
 
-
-  console.log("RESULT-- ", result);
+//  console.log("RESULT-- ", result);
+//  console.log("RESULT-- ", result[0].date);
+  
 
   const value = {
     name: result[0].name,
@@ -98,7 +94,7 @@ async function getTwitterTweets(html) {
     dateTweeted: result[0].date
   };
 
-  console.log("VALUE-- ", value);
+  // console.log("VALUE-- ", value);
   return value;
 }
 
@@ -107,10 +103,8 @@ async function runCron() {
   let counter = 0;
   let counter2 = 0;
 
-
   ///////  KEYWORDS /////////
   let keyword = [
-  
     "paid family leave",
     "#paidfamilyleave",
     "Paidleave",
@@ -132,7 +126,7 @@ async function runCron() {
     "San Diego",
     "Intuit",
     "#Intuit",
-    "session"
+    "matters"
   ];
 
   ///////  ACCOUNTS /////////
@@ -168,25 +162,31 @@ async function runCron() {
     return `https://twitter.com/${game}`;
   });
 
-  // let urls = ["wesbos",
-  // "florinpop1705"].map((game, i) => {
+  // let urls = [
+  // "IAmKennyWhyte"].map((game, i) => {
   //   return `https://twitter.com/${game}`;
   // });
 
   for (let index = 0; index < urls.length; index++) {
     const html = await getHTML(urls[index]);
     const tweet = await getTwitterTweets(html);
+    let  timeAgo = formatDistance(new Date(tweet.dateTweeted), new Date(Date.now()), {
+        addSuffix: true
+      })
 
     let value = db
       .get("twitter")
       .find({ name: tweet.name })
       .value();
 
+     
+    //   console.log("IS it equal?????",JSON.stringify((value.message).trim()) === JSON.stringify((tweet.tweets).trim()))
+    // console.log("Value====>>>> ", value);
 
-     console.log("HELLO====>>>> ",tweet.imageLink)
+ 
 
     if (typeof value === "undefined") {
-console.log("tweet.imageLink NEW++++ " , tweet.imageLink)
+      // console.log("undefined ", value.name);
 
       db.get("twitter")
         .push({
@@ -195,22 +195,27 @@ console.log("tweet.imageLink NEW++++ " , tweet.imageLink)
           name: tweet.name,
           link: tweet.imageLink,
           dateTweeted: tweet.dateTweeted,
+          timeAgo: timeAgo,
+          url: urls[index],
           notificationSent: false
         })
         .write();
+
+// Increment count
+db.update('count', n => n + 1)
+  .write()
+
       counter2++;
       console.log(`${counter2}  - New tweets added to database!!!`);
-    } else if ((Object.values(value.message).indexOf(tweet.tweets) === -1)) {
-
-      console.log("tweet.imageLink UPDATE++ " , tweet.imageLink)
+    } else if (!(JSON.stringify((value.message).trim()) === JSON.stringify((tweet.tweets).trim()))) {
+      console.log("Object.values ", value.name);
       db.get("twitter")
-        .find({ name: tweet.name })
+        .find({ name: tweet.name }).orderBy('dateTweeted','desc')
         .assign({
           date: Date.now(),
           message: tweet.tweets,
-          name: tweet.name,
-          link: tweet.imageLink,
           dateTweeted: tweet.dateTweeted,
+          timeAgo: timeAgo,
           notificationSent: false
         })
         .write();
@@ -223,7 +228,7 @@ console.log("tweet.imageLink NEW++++ " , tweet.imageLink)
       if (wordInString(tweet.tweets, kw)) {
         console.log("keyword Found!!", tweet.name, kw);
 
-        // sendNotification(tweet);
+        sendNotification(tweet);
       }
     });
   }
@@ -249,7 +254,7 @@ async function sendNotification(tweet) {
       .assign({ notificationSent: true })
       .write();
 
-    sendEmail(value.message, value.name);
+    // sendEmail(value.message, value.name);
     console.log("Email seeeent !");
   }
 }

@@ -1,5 +1,6 @@
 // DOM elements
 const tweet = document.getElementById("tweet");
+const tracked_header = document.getElementById("tracked_head");
 const twitter_handle = document.getElementById("twitter_handle");
 const gallery = document.querySelector(".game-gallery");
 
@@ -22,7 +23,10 @@ const gallery = document.querySelector(".game-gallery");
 
 console.log("Loaded page");
 
+
+
 function generateHTML(data, index) {
+  tracked_header.innerHTML = `Currently tracking ${index} twitter accounts`
   // console.log("DATA ",data)
   // console.log("InDEX ",index)
   //let counter = counter+1
@@ -39,7 +43,7 @@ function generateHTML(data, index) {
     <article class="mw5 center bg-white br3 pa5 pa4-ns mv3 ba b--black-20">
         <div class="tc">
           <img src=${data.link} class="br-100 h3 w3 dib" title="Photo">
-         <h1>  <a id="twitter_handle"  class="f4 fw7 dib pa2 no-underline bg-animate bg-white hover-bg-light-blue black" href="${data.link}">${data.name} </a></h1>
+         <h1>  <a id="twitter_handle"  class="f4 fw7 dib pa2 no-underline bg-animate bg-white hover-bg-light-blue black" href="${data.url}">${data.name} </a></h1>
         <div >
           <dl class="f6 lh-title mv2">
              <dt class="dib ml0 gray">Tweeted</dt>

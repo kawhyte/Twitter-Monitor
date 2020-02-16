@@ -43,7 +43,7 @@ function generateHTML(data, index) {
     <article class="mw5 center bg-white br3 pa5 pa4-ns mv3 ba b--black-20">
         <div class="tc">
           <img src=${data.link} class="br-100 h3 w3 dib" title="Photo">
-         <h1>  <a id="twitter_handle"  class="f4 fw7 dib pa2 no-underline bg-animate bg-white hover-bg-light-blue black" href="${data.url}">${data.name} </a></h1>
+         <h1>  <a id="twitter_handle"  class="f4 fw7 dib pa2 no-underline bg-animate bg-white hover-bg-light-blue blue" href="${data.url}">${data.name} </a></h1>
         <div >
           <dl class="f6 lh-title mv2">
              <dt class="dib ml0 gray">Tweeted</dt>
@@ -55,6 +55,9 @@ function generateHTML(data, index) {
         </div>
         <p id="tweet" class="lh-copy measure center f6 black-70 emoticon-size">${data.message}
         </p>
+
+        
+        
       </article> 
       </div>
   `;

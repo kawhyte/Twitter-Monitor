@@ -452,3 +452,4 @@ html, body, .grid-container { height: 100%; margin: 0; }
 .bg-animate, .bg-animate:hover, .bg-animate:focus {
     transition: background-color .15s ease-in-out;
 }
+

@@ -2,6 +2,9 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
+const LEGISCAN_API_KEY = process.env.LEGISCAN;
+const axios = require("axios");
+
 // import express from "express";
 import { getHTML, getTwitterTweets } from "./scraper";
 import db from "./db";
@@ -62,11 +65,21 @@ app.get("/", async (req, res, next) => {
 
 
 
-// app.get(`/data`, async (req, res, next) => {
+app.get("/track", async (req, res, next) => {
 
+  const url = `https://api.legiscan.com/?key=0b930fa026d22ed0d16ae690f3fa338f&op=getBill&id=1340027`;
+
+  axios({
+    url: url,
+    responseType: "json"
+  }).then(data => {
+
+ console.log(data.data)
+    res.json(data.data);
+  });
 
   
-// });
+});
 // async function loop (urls){
 // let obj = [];
 //   console.log(urls)

@@ -1,0 +1,107 @@
+!
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <body>
+        <header class="bg-white black-80 tc pv4 avenir">
+          <a href="/" class="dib pa3 w2 h2 br-100">
+      
+            <img class="svg-size"  src="law.svg" alt="Kiwi standing on oval">
+      
+          </a>
+          <h1 class="mt2 mb0 Roboto i fw1 f1"> Paid Leave Legislation Tracker </h1>
+          <a class=" mt2 mb0 f6 fw4 ttu tracked     link     mb2 dib black bg-white"
+            href="https://www.kennywhyte.com/">Created with ❤ by
+            Kenny</a>
+          <nav class="bt bb tc mw7 center mt4">
+            <a class="f6 f5-l link bg-animate black-80 hover-bg-lightest-blue dib pa3 ph4-l" href="/">Home</a>
+            <a class="f6 f5-l link bg-animate black-80 hover-bg-light-green dib pa3 ph4-l" href="/lg_tracker">Legislation Tracker</a>
+            <a class="f6 f5-l link bg-animate black-80 hover-bg-light-blue dib pa3 ph4-l" href="/shop">Twitter Mentions</a>
+            <!-- <a class="f6 f5-l link bg-animate black-80 hover-bg-light-pink dib pa3 ph4-l" href="/about">About</a> -->
+            <a class="f6 f5-l link bg-animate black-80 hover-bg-light-yellow dib pa3 ph4-l" href="https://www.kennywhyte.com/">About</a>
+          </nav>
+        </header>
+        <h2  id = "tracked_head" class="tracked ttu f4 fw1 white-70 head-label center">Latest tracked #PaidLeave twitter accounts</h2>
+        
+      
+        <div id="lg-gallery" class="grid-container cf">
+      
+
+
+            <div class="div${index + 1} container"> 
+                <article class="mw9 center bg-white br3 pa5 pa4-ns mv3 ba b--black-20">
+                    <div class="tc">
+                      <img src=${data.link} class="br-100 h3 w3 dib" title="Photo">
+                     <h1>  <a id="twitter_handle"  class="f4 fw7 dib pa2 no-underline bg-animate bg-white hover-bg-light-blue blue" href="${data.url}">${data.name} </a></h1>
+                    <div >
+                      <dl class="f6 lh-title mv2">
+                         <dt class="dib ml0 gray">Status</dt>
+                         <dd class="dib ml0 gray">Passed</dd>
+                       </dl>
+                     </div>
+                      <hr class="mw3 bb bw1 b--black-10">
+                      
+
+
+                      <article class="w-100  pa2">
+                   
+                        <div class="bg-red white w-100 mt3 pa3">
+                          <div class="w-100 pb1 bb b--white-50  inline-flex items-center justify-between">
+                            <div class="ttu f6 fw2">Progression</div>
+                          
+                          </div>
+                          <!-- <div class="pt3 f2 f2-m fw5">8/42</div> -->
+                          <div class="pt2 w-100 dt dt--fixed">
+                            <div class="dtc h1 red bg-white br1 br--left tc" style="width: 20%"><small>20%</small></div>
+                            <div class="dtc h1 bg-white o-30 br1 br--right"></div>
+                          </div>
+                          
+                          <div class="pt2 o-80 truncate"><small> Last Action</small></div>
+                        </div>
+                      </article>
+                      
+                    </div>
+
+
+
+
+
+                   
+                        
+                       
+                    <!-- <p id="tweet" class="lh-copy measure center f6 black-70 emoticon-size">${data.message}
+                    </p> -->
+            
+                    
+                    
+                  </article> 
+                  </div>
+
+        </div>
+      
+      
+        <script src="lg.js" async defer></script>
+      
+        
+      
+      </body>
+
+</html>

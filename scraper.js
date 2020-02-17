@@ -210,7 +210,7 @@ db.update('count', n => n + 1)
     } else if (!(JSON.stringify((value.message).trim()) === JSON.stringify((tweet.tweets).trim()))) {
       console.log("Object.values ", value.name);
       db.get("twitter")
-        .find({ name: tweet.name }).orderBy('dateTweeted','desc')
+        .find({ name: tweet.name })
         .assign({
           date: Date.now(),
           message: tweet.tweets,
@@ -221,7 +221,7 @@ db.update('count', n => n + 1)
         .write();
 
       counter++;
-      console.log(`${counter} tweet updated in  database!!!`);
+      console.log(`${counter} tweet updated in database!!!`);
     }
 
     keyword.forEach((kw, j) => {

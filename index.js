@@ -12,13 +12,37 @@ import  "./cron";
 
 const express = require('express');
 const favicon = require('express-favicon');
+var cors = require('cors')
 const app = express();
+
+app.use(cors())
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.use(express.json());
 
 app.use(express.static("public"));
+
+
+
+
+console.log("Loaded page");
+
+let urls = [
+"2139629",
+  "1342247"
+].map((game, i) => {
+  return `https://api.legiscan.com/?key=0b930fa026d22ed0d16ae690f3fa338f&op=getBill&id=${game}`;
+});
+
+ console.log(urls);
+
+
+
+
+
+
+
 
 // READ
 app.get("/", async (req, res, next) => {
@@ -66,7 +90,7 @@ app.get("/", async (req, res, next) => {
 
 
 app.get("/track", async (req, res, next) => {
-
+  console.log("FROM /Tracked ",req.body);
   const url = `https://api.legiscan.com/?key=0b930fa026d22ed0d16ae690f3fa338f&op=getBill&id=1340027`;
 
   axios({

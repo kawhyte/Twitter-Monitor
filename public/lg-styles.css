@@ -1,0 +1,43 @@
+html, body, .grid-container { height: 100%; margin: 0; }
+
+.grid-container * { 
+ border: 1px solid red; 
+
+ position: relative;
+background-color: #76c4e2;
+}
+
+/* .grid-container *:after { 
+ content:attr(class);
+ position: absolute;
+ top: 0;
+ left: 0;
+} */
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr  1fr  ;
+  /* grid-template-columns: repeat(auto-fill, 400px); */
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: ". . . ." ". . . " ". . . .";
+  justify-content: center
+  
+}
+
+
+    
+ .emoticon-size img{
+   
+    max-width:10%;
+    max-height:30%;
+
+ }  
+ .emoticon-size{
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+
+ }  
+
+
+ 

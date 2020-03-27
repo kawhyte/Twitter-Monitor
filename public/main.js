@@ -55,9 +55,6 @@ function generateHTML(data, index) {
         </div>
         <p id="tweet" class="lh-copy measure center f6 black-70 emoticon-size">${data.message}
         </p>
-
-        
-        
       </article> 
       </div>
   `;
@@ -91,7 +88,7 @@ let sorted = fetch("./db.json", {
       .map((currElement, index) => {
         return (html = generateHTML(currElement, index));
       })
-      .join(" ");
+      .join("");
 
     console.log("OUTSIDE", html);
     gallery.innerHTML = html;
